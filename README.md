@@ -1,2 +1,3 @@
-# experience-app
-this repository is to practice the UI
+# experience_app
+
+A new Flutter project.
