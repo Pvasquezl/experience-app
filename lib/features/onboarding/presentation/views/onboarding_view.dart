@@ -1,35 +1,30 @@
+import 'package:experience_app/core/navigation/router.dart';
+import 'package:experience_app/features/onboarding/presentation/state/onboarding_notifier.dart';
+import 'package:experience_app/features/onboarding/presentation/widgets/container_carrousel.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
-class OnboardingView extends StatefulWidget {
+class OnboardingView extends StatelessWidget {
   const OnboardingView({super.key});
 
   @override
-  State<OnboardingView> createState() => _OnboardingViewState();
+  Widget build(BuildContext context) {
+    return Scaffold(body: BodyWidget());
+  }
 }
 
-class _OnboardingViewState extends State<OnboardingView> {
+class BodyWidget extends ConsumerWidget {
   final PageController _controller = PageController();
 
-  int currentPage = 0;
-
-  final List<Map<String, String>> pages = [
-    {
-      "title": "Create a prototype in just a few minutes",
-      "desc":
-          "Enjoy these pre-made components and worry only about creating the best product ever",
-    },
-    {
-      "title": "Design beautiful apps faster and better",
-      "desc": "Build interfaces quickly with reusable widgets and components.",
-    },
-    {
-      "title": "Launch your next project here with us",
-      "desc": "Save time and focus on creating amazing user experiences.",
-    },
-  ];
+  BodyWidget({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final state = ref.watch(onboardingRiverpodProvider);
+    final pages = state.pages;
+    final currentPage = state.currentPage;
+
     return Scaffold(
       backgroundColor: Colors.white,
 
@@ -56,65 +51,18 @@ class _OnboardingViewState extends State<OnboardingView> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // DOTS
-                    Row(
-                      children: List.generate(
-                        pages.length,
-                        (index) => AnimatedContainer(
-                          duration: const Duration(milliseconds: 300),
-                          margin: const EdgeInsets.only(right: 6),
-                          width: currentPage == index ? 20 : 8,
-                          height: 8,
-                          decoration: BoxDecoration(
-                            color: currentPage == index
-                                ? Colors.blue
-                                : Colors.grey.shade300,
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                        ),
-                      ),
-                    ),
-
-                    const SizedBox(height: 20),
-
-                    // SOLO TEXTO DESLIZABLE
                     Expanded(
-                      child: PageView.builder(
+                      child: ContainerCarrousel(
+                        pages: pages,
                         controller: _controller,
-                        itemCount: pages.length,
                         onPageChanged: (index) {
-                          setState(() {
-                            currentPage = index;
-                          });
-                        },
-                        itemBuilder: (context, index) {
-                          return Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                pages[index]["title"]!,
-                                style: const TextStyle(
-                                  fontSize: 28,
-                                  fontWeight: FontWeight.w900,
-                                ),
-                              ),
-
-                              const SizedBox(height: 20),
-
-                              Text(
-                                pages[index]["desc"]!,
-                                style: const TextStyle(
-                                  fontSize: 14,
-                                  color: Colors.black54,
-                                ),
-                              ),
-                            ],
-                          );
+                          ref
+                              .read(onboardingRiverpodProvider.notifier)
+                              .setPage(index);
                         },
                       ),
                     ),
-
-                    // BOTÓN FIJO
+                    // boton azul
                     SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
@@ -124,7 +72,9 @@ class _OnboardingViewState extends State<OnboardingView> {
                               duration: const Duration(milliseconds: 400),
                               curve: Curves.easeInOut,
                             );
-                          } else {}
+                          } else if (currentPage == pages.length - 1) {
+                            context.goNamed(Routes.experiencePersonalitation);
+                          }
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: const Color(0xFF006FFD),
