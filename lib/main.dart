@@ -1,8 +1,9 @@
-import 'package:experience_app/features/onboarding/presentation/views/onboarding_view.dart';
+import 'package:experience_app/core/navigation/router.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 void main() {
-  runApp(const MainApp());
+  runApp(const ProviderScope(child: MainApp()));
 }
 
 class MainApp extends StatelessWidget {
@@ -10,9 +11,11 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp.router(
+      routerConfig: router,
+      theme: ThemeData(primarySwatch: Colors.blue),
+      title: 'Experience App',
       debugShowCheckedModeBanner: false,
-      home: Scaffold(body: OnboardingView()),
     );
   }
 }
