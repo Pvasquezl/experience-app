@@ -31,7 +31,6 @@ class BodyWidget extends ConsumerWidget {
       body: SafeArea(
         child: Column(
           children: [
-            // IMAGEN FIJA
             Expanded(
               flex: 5,
               child: SizedBox(
@@ -43,7 +42,6 @@ class BodyWidget extends ConsumerWidget {
               ),
             ),
 
-            // CONTENIDO
             Expanded(
               flex: 3,
               child: Padding(
@@ -73,6 +71,7 @@ class BodyWidget extends ConsumerWidget {
                               curve: Curves.easeInOut,
                             );
                           } else if (currentPage == pages.length - 1) {
+                            ref.read(onboardingRiverpodProvider.notifier).setPage(0);
                             context.goNamed(Routes.experiencePersonalitation);
                           }
                         },

@@ -1,23 +1,19 @@
+import 'package:experience_app/features/onboarding/domain/entities/user_interests_entity.dart';
 import 'package:flutter/material.dart';
 
 class ContainerInterests extends StatefulWidget {
-  const ContainerInterests({super.key});
+  const ContainerInterests({super.key, required this.interests, this.onAdd, this.onRemove});
+
+  final List<UserInterests> interests;
+  final void Function(UserInterests)? onAdd;
+  final void Function(UserInterests)? onRemove;
 
   @override
   State<ContainerInterests> createState() => _ContainerInterestsState();
 }
 
 class _ContainerInterestsState extends State<ContainerInterests> {
-  final List<String> _interests = [
-    'User Interface',
-    'User Experience',
-    'User Research',
-    'UX Writing',
-    'User Testing',
-    'Service Design',
-    'Strategy',
-    'Design Systems',
-  ];
+
   
   final Set<int> _selectedIndices = {};
 
@@ -25,9 +21,9 @@ class _ContainerInterestsState extends State<ContainerInterests> {
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: _interests.asMap().entries.map((entry) {
+      children: widget.interests.asMap().entries.map((entry) {
         int index = entry.key;
-        String title = entry.value;
+        String title = entry.value.name;
         bool isSelected = _selectedIndices.contains(index);
 
         return Padding(
@@ -40,8 +36,10 @@ class _ContainerInterestsState extends State<ContainerInterests> {
                 setState(() {
                   if (isSelected) {
                     _selectedIndices.remove(index);
+                    widget.onRemove?.call(widget.interests[index]);
                   } else {
                     _selectedIndices.add(index);
+                    widget.onAdd?.call(widget.interests[index]);
                   }
                 });
               },

@@ -1,3 +1,4 @@
+import 'package:experience_app/features/explore/presentation/explore_view.dart';
 import 'package:experience_app/features/onboarding/presentation/views/experience_personalitation_view.dart';
 import 'package:experience_app/features/onboarding/presentation/views/onboarding_view.dart';
 import 'package:go_router/go_router.dart';
@@ -15,10 +16,16 @@ final router = GoRouter(
       path: '/experience_personalitation',
       builder: (context, state) => const ExperiencePersonalitationView(),
     ),
+    GoRoute(
+      name: Routes.explore,
+      path: '/explore',
+      builder: (context, state) => const ExploreView(),
+    ),
   ],
 );
 
 abstract class Routes {
   static const String onboarding = 'onboarding';
   static const String experiencePersonalitation = 'experience_personalitation';
+  static const String explore = 'explore';
 }
