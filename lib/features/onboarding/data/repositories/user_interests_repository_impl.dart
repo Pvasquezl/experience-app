@@ -12,7 +12,6 @@ class UserInterestsRepositoryImpl extends UserInterestsRepository {
   @override
   Future<List<UserInterests>> getUserInterests() async {
     final userInterests = await _dataSource.getUserInterests();
-    print("UserInterestsRepositoryImpl - getUserInterests: ${userInterests.map((e) => e.name).toList()}");
     return userInterests.map((model) => UserInterests.fromModel(model)).toList();
   }
 

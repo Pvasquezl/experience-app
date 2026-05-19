@@ -37,6 +37,14 @@ class InterestsDataSource {
             {
                 'id': 8,
                 'name': 'Design Systems',
+            },
+            {
+                'id': 9,
+                'name': 'Accessibility',
+            },
+            {
+                'id': 10,
+                'name': 'Motion Design',
             }
         ];
         return data.map((json) => UserInterestsModel.fromJson(json)).toList();
