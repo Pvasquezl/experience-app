@@ -15,5 +15,10 @@ class UserInterests {
       name: model.name,
     );
   }
-
+  UserInterestsModel toModel() {
+    return UserInterestsModel(
+      id: id,
+      name: name,
+    );
+  }
 }

@@ -1,6 +1,5 @@
 
 import 'package:experience_app/features/onboarding/data/models/user_interests_model.dart';
-import 'package:experience_app/features/onboarding/domain/entities/user_interests_entity.dart';
 
 class InterestsDataSource {
 
@@ -43,7 +42,7 @@ class InterestsDataSource {
         return data.map((json) => UserInterestsModel.fromJson(json)).toList();
     }
 
-    Future<void> saveUserInterests(List<UserInterests> interests) async {
+    Future<void> saveUserInterests(List<UserInterestsModel> interests) async {
         await Future.delayed(const Duration(seconds: 1)); 
         final userInterests = interests.map((interest) => UserInterestsModel(
             id: interest.id,

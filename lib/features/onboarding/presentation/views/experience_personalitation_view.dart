@@ -19,8 +19,6 @@ class ExperiencePersonalitationBody extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final state = ref.watch(experiencePersonalitationNotifierProvider);
-    final interests = state.interests;
     return PopScope(
       canPop: false,
       onPopInvokedWithResult: (bool didPop, Object? result) {
@@ -70,27 +68,23 @@ class ExperiencePersonalitationBody extends ConsumerWidget {
                 Expanded(
                   child: SingleChildScrollView(
                     physics:
-                        const BouncingScrollPhysics(), // Da un efecto suave al deslizar
-                    child: ContainerInterests(
-                      interests: interests ?? [],
-                      onAdd: (interest) {
-                        ref.read(experiencePersonalitationNotifierProvider.notifier).addSelectedInterest(interest);
-                      },
-                      onRemove: (interest) {
-                        ref.read(experiencePersonalitationNotifierProvider.notifier).removeSelectedInterest(interest);
-                      },
-                    ),
+                        const BouncingScrollPhysics(), // Da un efecto al deslizar
+                    child: ContainerInterests(),
                   ),
                 ),
 
                 const SizedBox(
                   height: 16.0,
-                ), // Separación controlada antes del botón fijo
+                ), 
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
                     onPressed: () {
-                      ref.read(experiencePersonalitationNotifierProvider.notifier).saveUserInterests();
+                      ref
+                          .read(
+                            experiencePersonalitationNotifierProvider.notifier,
+                          )
+                          .saveUserInterests();
                       context.goNamed(Routes.explore);
                     },
                     style: ElevatedButton.styleFrom(

@@ -14,7 +14,6 @@ class ExperiencePersonalitationNotifier
     extends StateNotifier<ExperiencePersonalitationState> {
   final GetUserInterestsUseCase _getUserInterestsUseCase;
   final SaveUserInterestsUseCase _saveUserInterestsUseCase;
-  final List<UserInterests> _selectedInterests = [];
 
   ExperiencePersonalitationNotifier({
     GetUserInterestsUseCase? getUserInterestsUseCase,
@@ -29,31 +28,53 @@ class ExperiencePersonalitationNotifier
 
   Future<void> loadUserInterests() async {
     try {
+      print("Loading user interests...");
       final interests = await _getUserInterestsUseCase();
-      state = ExperiencePersonalitationLoadedState(interests: interests);
+      state = ExperiencePersonalitationLoadedState(
+        interests: interests,
+      );
     } catch (e) {
-      // Manejo de errores
+      print(  "Error loading interests: $e");
     }
   }
 
   Future<void> saveUserInterests() async {
-    final interests = _selectedInterests;
+    final interests = state.selectedInterests;
     try {
       await _saveUserInterestsUseCase(interests);
     } catch (e) {
       // Manejo de errores
+      print("Error saving interests: $e");
     }
   }
 
   void addSelectedInterest(UserInterests interest) {
-    if (!_selectedInterests.contains(interest)) {
-      _selectedInterests.add(interest);
+    final alreadySelected = state.selectedInterests.any((i) => i.id == interest.id);
+    final updatedInterests = [...state.selectedInterests, interest];
+    if (!alreadySelected) {
+      print("Adding interest: ${interest.name}");
+      print("Updated interests: ${updatedInterests.map((e) => e.name).toList()}");
+      print("interests data in state: ${state.interests.map((e) => e.name).toList()}");
+      state = UpdateSelectedInterestsState(
+        interests: state.interests,
+        selectedInterests: updatedInterests,
+      );
+      print("interests data in state: ${state.interests.map((e) => e.name).toList()}");
+
     }
   }
 
   void removeSelectedInterest(UserInterests interest) {
-    if (_selectedInterests.contains(interest)) {
-      _selectedInterests.remove(interest);
+    final updatedInterests = state.selectedInterests
+        .where((i) => i.id != interest.id)
+        .toList();
+    if (state.selectedInterests.any((i) => i.id == interest.id)) {
+      print("Removing interest: ${interest.name}");
+      print("Updated interests: ${updatedInterests.map((e) => e.name).toList()}");
+      state = UpdateSelectedInterestsState(
+        interests: state.interests,
+        selectedInterests: updatedInterests,
+      );
     }
   }
 }

@@ -1,9 +1,12 @@
 import 'package:experience_app/features/onboarding/domain/entities/user_interests_entity.dart';
 
 abstract base class ExperiencePersonalitationState {
-  final List<UserInterests>? interests;
+  final List<UserInterests> interests;
   final List<UserInterests> selectedInterests;
-  ExperiencePersonalitationState({this.interests = const [], this.selectedInterests = const []});
+  ExperiencePersonalitationState({
+    this.interests = const [],
+    this.selectedInterests = const [],
+  });
 }
 
 final class ExperiencePersonalitationInitialState extends ExperiencePersonalitationState {
@@ -11,5 +14,15 @@ final class ExperiencePersonalitationInitialState extends ExperiencePersonalitat
 }
 
 final class ExperiencePersonalitationLoadedState extends ExperiencePersonalitationState {
-  ExperiencePersonalitationLoadedState({required super.interests});
+  ExperiencePersonalitationLoadedState({
+    required super.interests,
+    super.selectedInterests = const [],
+  });
+}
+
+final class UpdateSelectedInterestsState extends ExperiencePersonalitationState {
+  UpdateSelectedInterestsState({
+    required super.interests,
+    required super.selectedInterests,
+  });
 }
