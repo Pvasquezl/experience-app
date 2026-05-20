@@ -13,13 +13,13 @@ class AppShell extends StatelessWidget {
       bottomNavigationBar: NavigationBarTheme(
         data: NavigationBarThemeData(
           backgroundColor: Colors.white,
-          indicatorColor: const Color(0xFF0066FF),
+          indicatorColor: Colors.transparent,
 
           // Aqui editamos el color de los iconos en el bottom bar
           iconTheme: WidgetStateProperty.resolveWith((states) {
              if (states.contains(WidgetState.selected)) {
               return const IconThemeData(
-                color: Colors.white,
+                color: Color(0xFF0066FF),
               );
             }
             return const IconThemeData(
