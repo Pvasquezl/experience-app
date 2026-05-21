@@ -1,8 +1,11 @@
+import 'package:experience_app/core/local_storage.dart';
 import 'package:experience_app/core/navigation/router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await LocalStorage().init();
   runApp(const ProviderScope(child: MainApp()));
 }
 

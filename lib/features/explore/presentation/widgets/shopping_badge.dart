@@ -1,14 +1,17 @@
+import 'package:experience_app/features/explore/presentation/state/shopping_cart_notifier.dart';
+import 'package:experience_app/features/explore/presentation/state/shopping_cart_state.dart';
 import 'package:flutter/material.dart';
-class ShoppingBagBadge extends StatelessWidget {
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+class ShoppingBagBadge extends ConsumerWidget {
   final int count;
 
-  const ShoppingBagBadge({
-    super.key,
-    required this.count,
-  });
+  const ShoppingBagBadge({super.key, required this.count});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final state = ref.watch(shoppingCartNotifierProvider);
+    final cartItems = state is ShoppingCartLoadedState ? state.cartItems : 0;
     return Stack(
       clipBehavior: Clip.none,
       children: [
@@ -18,7 +21,7 @@ class ShoppingBagBadge extends StatelessWidget {
           color: Colors.black87,
         ),
 
-        if (count > 0)
+        if (state is ShoppingCartLoadedState && cartItems > 0)
           Positioned(
             right: -4,
             top: 15,
@@ -28,13 +31,10 @@ class ShoppingBagBadge extends StatelessWidget {
                 color: Color(0xFF006FFD),
                 shape: BoxShape.circle,
               ),
-              constraints: const BoxConstraints(
-                minWidth: 18,
-                minHeight: 18,
-              ),
+              constraints: const BoxConstraints(minWidth: 18, minHeight: 18),
               child: Center(
                 child: Text(
-                  '$count',
+                  '$cartItems',
                   style: const TextStyle(
                     color: Colors.white,
                     fontSize: 10,
