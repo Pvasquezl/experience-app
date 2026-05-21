@@ -1,4 +1,5 @@
 import 'package:experience_app/core/navigation/router.dart';
+import 'package:experience_app/features/explore/presentation/widgets/header_explore.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 class ExploreView extends StatelessWidget {
@@ -6,12 +7,7 @@ class ExploreView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Explore'),
-      ),
-      body: const ExploreBody(),
-    );
+    return const ExploreBody();
   }
 
 }
@@ -26,7 +22,17 @@ class ExploreBody extends StatelessWidget {
       onPopInvokedWithResult: (bool didPop, Object? result) {
         context.goNamed(Routes.experiencePersonalitation);
       },
-      child: const Text('Explore Body'),
+      child: Scaffold(
+        body: SafeArea(
+          child: Column(
+            children: const [
+              SizedBox(height: 16.0),
+              HeaderExplore(),
+              
+            ],
+          )
+        ),
+      ),
     );
   }
 }

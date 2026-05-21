@@ -1,5 +1,5 @@
 import 'package:experience_app/core/navigation/app_shell.dart';
-import 'package:experience_app/features/explore/presentation/explore_view.dart';
+import 'package:experience_app/features/explore/presentation/views/explore_view.dart';
 import 'package:experience_app/features/onboarding/presentation/views/experience_personalitation_view.dart';
 import 'package:experience_app/features/onboarding/presentation/views/onboarding_view.dart';
 import 'package:go_router/go_router.dart';
