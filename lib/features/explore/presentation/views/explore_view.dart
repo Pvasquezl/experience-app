@@ -1,6 +1,7 @@
 import 'package:experience_app/core/navigation/router.dart';
 import 'package:experience_app/features/explore/presentation/widgets/header_explore.dart';
 import 'package:experience_app/features/explore/presentation/widgets/photo_carrousel.dart';
+import 'package:experience_app/features/explore/presentation/widgets/product_carrousel.dart';
 import 'package:experience_app/features/explore/presentation/widgets/see_more_space.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -42,6 +43,8 @@ class ExploreBody extends StatelessWidget {
                       title: "Perfect for you",
                       route: Routes.onboarding,
                     ),
+                    SizedBox(height: 12.0),
+                    ProductCarrousel(),
                   ],
                 ),
               ),
