@@ -20,7 +20,8 @@ class _ContainerInterests extends ConsumerWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: interests.asMap().entries.map((entry) {
         String title = entry.value.name;
-        bool isSelected = state.selectedInterests.any((i) => i.id == entry.value.id);
+        final selectedInterests = state.selectedInterests;
+        bool isSelected = selectedInterests.any((i) => i.id == entry.value.id);
 
         return Padding(
           padding: const EdgeInsets.only(bottom: 12.0),
@@ -30,9 +31,13 @@ class _ContainerInterests extends ConsumerWidget {
             child: OutlinedButton(
               onPressed: () {
                 if (isSelected) {
-                  ref.read(experiencePersonalitationNotifierProvider.notifier).removeSelectedInterest(entry.value);
+                  ref
+                      .read(experiencePersonalitationNotifierProvider.notifier)
+                      .removeSelectedInterest(entry.value);
                 } else {
-                  ref.read(experiencePersonalitationNotifierProvider.notifier).addSelectedInterest(entry.value);
+                  ref
+                      .read(experiencePersonalitationNotifierProvider.notifier)
+                      .addSelectedInterest(entry.value);
                 }
               },
               style: OutlinedButton.styleFrom(

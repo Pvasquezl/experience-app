@@ -27,7 +27,7 @@ class _HeaderExplore extends StatelessWidget {
 
           SizedBox(width: 12.0),
 
-          ShoppingBagBadge(count: 15),
+          ShoppingBagBadge(),
         ],
       ),
     );

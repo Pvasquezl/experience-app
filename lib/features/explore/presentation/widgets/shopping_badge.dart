@@ -4,9 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class ShoppingBagBadge extends ConsumerWidget {
-  final int count;
-
-  const ShoppingBagBadge({super.key, required this.count});
+  const ShoppingBagBadge({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

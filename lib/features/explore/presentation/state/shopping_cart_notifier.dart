@@ -19,7 +19,7 @@ class ShoppingCartNotifier extends StateNotifier<ShoppingCartState> {
   }
 
   Future<void> loadShoppingCartItemCount() async {
-    final count = await _getShoppingCartItemCountUseCase();
+    final count = await _getShoppingCartItemCountUseCase.call();
     state = ShoppingCartLoadedState(cartItems: count);
   }
 }
