@@ -1,6 +1,8 @@
+import 'package:experience_app/core/navigation/router.dart';
 import 'package:experience_app/features/explore/domain/entities/product_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:experience_app/features/explore/presentation/widgets/product_box.dart';
+import 'package:go_router/go_router.dart';
 
 class ProductCarrousel extends StatelessWidget {
   final List<ProductEntity> products;
@@ -21,7 +23,7 @@ class ProductCarrousel extends StatelessWidget {
             child: ProductBox(
               product: product,
               onTap: () {
-                debugPrint('Tapped on ${product.id}');
+                context.goNamed(Routes.productDetail, extra: product);
               },
             ),
           );
