@@ -5,20 +5,26 @@ class SeeMoreSpace extends StatelessWidget {
   final String _title;
   final String _route;
   const SeeMoreSpace({super.key, required String title, required String route})
-      : _title = title,
-        _route = route;
+    : _title = title,
+      _route = route;
 
   @override
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(_title, style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),),
+        Text(
+          _title,
+          style: const TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+        ),
         TextButton(
           onPressed: () {
-              context.goNamed(_route);
+            context.goNamed(_route);
           },
-          child: const Text("See more", style: TextStyle(color: Color(0xFF006FFD)),),
+          child: const Text(
+            "See more",
+            style: TextStyle(color: Color(0xFF006FFD)),
+          ),
         ),
       ],
     );
