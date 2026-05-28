@@ -49,6 +49,18 @@ class ProductSectionsDataSource {
           },
         ],
       },
+      {
+        'title': 'For this Sunday',
+        'products': [
+          {
+            'id': '6',
+            'name': 'Sunday Dress',
+            'price': 20.00,
+            'image':
+                'https://emprendepyme.net/wp-content/uploads/2023/03/cualidades-producto.jpg',
+          },
+        ],
+      },
     ];
     return mockData.map((json) => ProductSectionModel.fromJson(json)).toList();
   }
