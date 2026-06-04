@@ -11,5 +11,23 @@ final productDetailNotifierProvider =
 
 class ProductDetailNotifier extends StateNotifier<ProductDetailState> {
   final ProductEntity product;
-  ProductDetailNotifier(this.product) : super(ProductDetailInitial(product));
+  ProductDetailNotifier(this.product) : super(ProductDetailInitial(product)) {
+    loadProductDetail();
+  }
+
+  void setCurrentPage(int page) {
+    if (state is ProductDetailLoaded) {
+      final currentState = state as ProductDetailLoaded;
+      state = ProductDetailLoaded(
+        product: currentState.product,
+        productDetail: currentState.productDetail,
+        currentPage: page,
+      );
+    }
+  }
+
+  Future<void> loadProductDetail() async {
+    // Simulación de carga de detalles del producto
+    print('Cargando detalles del producto: ${product.name}');
+  }
 }

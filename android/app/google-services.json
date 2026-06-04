@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "228133324204",
+    "project_id": "experience-app-f0d26",
+    "storage_bucket": "experience-app-f0d26.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:228133324204:android:8e3966ef1b35909f27e609",
+        "android_client_info": {
+          "package_name": "com.example.experience_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAhb1yJYrDfYZFE4kriKkKUJOI3aihIcpI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

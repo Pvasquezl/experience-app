@@ -7,7 +7,7 @@ import 'package:experience_app/features/product/presentation/views/product_detai
 import 'package:go_router/go_router.dart';
 
 final router = GoRouter(
-  initialLocation: '/explore',
+  initialLocation: '/product_detail',
   routes: [
     GoRoute(
       name: Routes.onboarding,
