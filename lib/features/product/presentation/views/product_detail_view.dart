@@ -13,14 +13,16 @@ class ProductDetailView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(productDetailNotifierProvider(product));
+    final producto = state.product;
+
     return PopScope(
       canPop: false,
       onPopInvokedWithResult: (bool didPop, Object? result) {
         context.goNamed(Routes.explore);
       },
       child: Scaffold(
-        appBar: AppBar(title: Text('Product Detail - ID: ${product.id}')),
-        body: Center(child: Text('Details for product with ID: ${product.id}')),
+        appBar: AppBar(title: Text('Product Detail - ID: ${producto.id}')),
+        body: Center(child: Text('Details for product with ID: ${producto.id}')),
       ),
     );
   }

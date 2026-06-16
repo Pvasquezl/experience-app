@@ -7,7 +7,7 @@ import 'package:experience_app/features/product/presentation/views/product_detai
 import 'package:go_router/go_router.dart';
 
 final router = GoRouter(
-  initialLocation: '/product_detail',
+  initialLocation: '/experience_personalitation',
   routes: [
     GoRoute(
       name: Routes.onboarding,
@@ -24,6 +24,7 @@ final router = GoRouter(
       path: '/product_detail',
       builder: (context, state) {
         final product = state.extra as ProductEntity;
+        print(product);
         return ProductDetailView(product: product);
       },
     ),

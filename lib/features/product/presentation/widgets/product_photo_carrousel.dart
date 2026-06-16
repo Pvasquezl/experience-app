@@ -1,10 +1,12 @@
+import 'package:experience_app/features/explore/domain/entities/product_entity.dart';
 import 'package:experience_app/features/product/presentation/state/product_detail_notifier.dart';
 import 'package:experience_app/features/product/presentation/state/product_detail_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class ProductPhotoCarrousel extends ConsumerWidget {
-  const ProductPhotoCarrousel({super.key});
+  final ProductEntity product;
+  const ProductPhotoCarrousel({super.key, required this.product});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -22,7 +24,7 @@ class ProductPhotoCarrousel extends ConsumerWidget {
             physics: const ClampingScrollPhysics(),
             onPageChanged: (index) {
               ref
-                  .read(productDetailNotifierProvider.notifier)
+                  .read(productDetailNotifierProvider(product).notifier)
                   .setCurrentPage(index);
             },
             itemBuilder: (context, index) {
