@@ -1,18 +1,24 @@
 import 'package:experience_app/core/navigation/app_shell.dart';
 import 'package:experience_app/features/explore/domain/entities/product_entity.dart';
 import 'package:experience_app/features/explore/presentation/views/explore_view.dart';
+import 'package:experience_app/features/login/presentation/views/login_view.dart';
 import 'package:experience_app/features/onboarding/presentation/views/experience_personalitation_view.dart';
 import 'package:experience_app/features/onboarding/presentation/views/onboarding_view.dart';
 import 'package:experience_app/features/product/presentation/views/product_detail_view.dart';
 import 'package:go_router/go_router.dart';
 
 final router = GoRouter(
-  initialLocation: '/experience_personalitation',
+  initialLocation: '/login',
   routes: [
     GoRoute(
       name: Routes.onboarding,
       path: '/onboarding',
       builder: (context, state) => const OnboardingView(),
+    ),
+    GoRoute(
+      name: Routes.login,
+      path: '/login',
+      builder: (context, state) => const LoginView(),
     ),
     GoRoute(
       name: Routes.experiencePersonalitation,
@@ -76,6 +82,7 @@ final router = GoRouter(
 
 abstract class Routes {
   static const String onboarding = 'onboarding';
+  static const String login = 'login';
   static const String experiencePersonalitation = 'experience_personalitation';
   static const String explore = 'explore';
   static const String categories = 'categories';
