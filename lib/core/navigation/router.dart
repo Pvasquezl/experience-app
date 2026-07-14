@@ -1,4 +1,6 @@
+import 'package:experience_app/core/navigation/admin_app_shell.dart';
 import 'package:experience_app/core/navigation/app_shell.dart';
+import 'package:experience_app/features/admin/tasks/presentation/views/tasks_view.dart';
 import 'package:experience_app/features/explore/domain/entities/product_entity.dart';
 import 'package:experience_app/features/explore/presentation/views/explore_view.dart';
 import 'package:experience_app/features/login/presentation/views/login_view.dart';
@@ -77,6 +79,22 @@ final router = GoRouter(
         ),
       ],
     ),
+    StatefulShellRoute.indexedStack(
+      builder: (context, state, navigationShell) {
+        return AdminAppShell(navigationShell: navigationShell);
+      },
+      branches: [
+        StatefulShellBranch(
+          routes: [
+            GoRoute(
+              name: Routes.adminTasks,
+              path: '/admin_tasks',
+              builder: (context, state) => const TasksView(),
+            ),
+          ],
+        )
+      ],
+    ),
   ],
 );
 
@@ -89,4 +107,5 @@ abstract class Routes {
   static const String favorites = 'stores';
   static const String profile = 'profile';
   static const String productDetail = 'product_detail';
+  static const String adminTasks = 'admin_tasks';
 }

@@ -1,4 +1,5 @@
 import 'package:experience_app/core/navigation/router.dart';
+import 'package:experience_app/features/login/domain/entities/user_entity.dart';
 import 'package:experience_app/features/login/presentation/state/login_notifier.dart';
 import 'package:experience_app/features/login/presentation/state/login_state.dart';
 import 'package:flutter/material.dart';
@@ -18,11 +19,8 @@ class _LoginView extends ConsumerWidget {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
-
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final loginState = ref.read(loginNotifierProvider);
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -65,7 +63,23 @@ class _LoginView extends ConsumerWidget {
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
-                  onPressed: () => context.goNamed(Routes.explore),
+                  onPressed: () async {
+                    await ref
+                        .read(loginNotifierProvider.notifier)
+                        .login(
+                          _emailController.text.trim(),
+                          _passwordController.text.trim(),
+                        );
+                    final state = ref.read(loginNotifierProvider);
+                    if (state is LoginSuccessState && context.mounted) {
+                      print('Login successful: ${state.role}');
+                      if(state.role == Role.admin) {
+                        context.goNamed(Routes.adminTasks);
+                      } else {
+                        context.goNamed(Routes.explore);
+                      }
+                    }
+                  },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFF006FFD),
                     padding: const EdgeInsets.symmetric(vertical: 16),
@@ -82,11 +96,7 @@ class _LoginView extends ConsumerWidget {
               const SizedBox(height: 16),
               Center(
                 child: TextButton(
-                  onPressed: () {
-                    if (loginState is LoginSuccessState) {
-                      context.goNamed(Routes.explore);
-                    }
-                  },
+                  onPressed: () {},
                   child: const Text("Don't have an account? Sign Up"),
                 ),
               ),

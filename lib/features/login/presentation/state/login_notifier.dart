@@ -18,8 +18,8 @@ class LoginNotifier extends StateNotifier<LoginState> {
   Future<void> login(String email, String password) async {
     state = LoginLoadingState(email, password, null);
     try {
-      final userId = await _loginUseCase.call(email, password);
-      state = LoginSuccessState(email, password, userId);
+      final user = await _loginUseCase.call(email, password);
+      state = LoginSuccessState(email, password, user.role);
     } catch (e) {
       print('Error en login: $e');
     }
