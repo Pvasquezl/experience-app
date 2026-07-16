@@ -1,5 +1,6 @@
 import 'package:experience_app/core/navigation/admin_app_shell.dart';
 import 'package:experience_app/core/navigation/app_shell.dart';
+import 'package:experience_app/features/admin/products/presentation/views/products_view.dart';
 import 'package:experience_app/features/admin/tasks/presentation/views/tasks_view.dart';
 import 'package:experience_app/features/explore/domain/entities/product_entity.dart';
 import 'package:experience_app/features/explore/presentation/views/explore_view.dart';
@@ -92,7 +93,16 @@ final router = GoRouter(
               builder: (context, state) => const TasksView(),
             ),
           ],
-        )
+        ),
+        StatefulShellBranch(
+          routes: [
+            GoRoute(
+              name: Routes.adminProducts,
+              path: '/admin_products',
+              builder: (context, state) => const ProductsView(),
+            ),
+          ],
+        ),
       ],
     ),
   ],
@@ -108,4 +118,5 @@ abstract class Routes {
   static const String profile = 'profile';
   static const String productDetail = 'product_detail';
   static const String adminTasks = 'admin_tasks';
+  static const String adminProducts = 'admin_products';
 }
