@@ -27,18 +27,16 @@ class _ProductFormViewState extends ConsumerState<ProductFormView> {
   @override
   void initState() {
     super.initState();
-    _nameController =
-        TextEditingController(text: widget.product?.name ?? '');
+    _nameController = TextEditingController(text: widget.product?.name ?? '');
     _priceController = TextEditingController(
-        text: widget.product != null
-            ? widget.product!.price.toStringAsFixed(2)
-            : '');
+      text: widget.product != null
+          ? widget.product!.price.toStringAsFixed(2)
+          : '',
+    );
     _quantityController = TextEditingController(
-        text: widget.product != null
-            ? widget.product!.quantity.toString()
-            : '');
-    _imageController =
-        TextEditingController(text: widget.product?.image ?? '');
+      text: widget.product != null ? widget.product!.quantity.toString() : '',
+    );
+    _imageController = TextEditingController(text: widget.product?.image ?? '');
     _available = widget.product?.available ?? true;
   }
 
@@ -67,8 +65,7 @@ class _ProductFormViewState extends ConsumerState<ProductFormView> {
         ),
       );
     } else {
-      final newId =
-          DateTime.now().millisecondsSinceEpoch.toString();
+      final newId = DateTime.now().millisecondsSinceEpoch.toString();
       notifier.addProduct(
         ProductAdminEntity(
           id: newId,
@@ -87,9 +84,7 @@ class _ProductFormViewState extends ConsumerState<ProductFormView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(_isEditing ? 'Edit Product' : 'New Product'),
-      ),
+      appBar: AppBar(title: Text(_isEditing ? 'Edit Product' : 'New Product')),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Form(
@@ -121,8 +116,9 @@ class _ProductFormViewState extends ConsumerState<ProductFormView> {
               const SizedBox(height: 16),
               TextFormField(
                 controller: _priceController,
-                keyboardType:
-                    const TextInputType.numberWithOptions(decimal: true),
+                keyboardType: const TextInputType.numberWithOptions(
+                  decimal: true,
+                ),
                 decoration: const InputDecoration(
                   labelText: 'Price',
                   prefixText: '\$ ',
@@ -155,12 +151,15 @@ class _ProductFormViewState extends ConsumerState<ProductFormView> {
                 },
               ),
               const SizedBox(height: 16),
-              TextFormField(
-                controller: _imageController,
-                decoration: const InputDecoration(
-                  labelText: 'Image URL',
-                  border: OutlineInputBorder(),
-                ),
+              IconButton(
+                icon: const Icon(Icons.image_outlined),
+                iconSize: 40.0,
+                color: Colors.blue,
+                tooltip: 'Seleccionar imagen',
+                onPressed: () {
+                  // Lógica para seleccionar la imagen
+                  //seleccionarImagen();
+                },
               ),
               const SizedBox(height: 8),
               SwitchListTile(
