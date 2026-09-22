@@ -1,5 +1,7 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class NotificationsService {
   static final instance = NotificationsService();
@@ -7,17 +9,24 @@ class NotificationsService {
   NotificationsService({
     FirebaseMessaging? firebaseMessaging,
     FlutterLocalNotificationsPlugin? localNotifications,
-  })  : _localNotifications =
-            localNotifications ?? FlutterLocalNotificationsPlugin(),
-        _firebaseMessaging = firebaseMessaging ?? FirebaseMessaging.instance;
+    FirebaseAuth? firebaseAuth,
+    FirebaseFirestore? firestore,
+  }) : _localNotifications =
+           localNotifications ?? FlutterLocalNotificationsPlugin(),
+       _firebaseMessaging = firebaseMessaging ?? FirebaseMessaging.instance,
+       _firebaseAuth = firebaseAuth ?? FirebaseAuth.instance,
+       _firestore = firestore ?? FirebaseFirestore.instance;
 
   final FirebaseMessaging _firebaseMessaging;
   final FlutterLocalNotificationsPlugin _localNotifications;
+  final FirebaseAuth _firebaseAuth;
+  final FirebaseFirestore _firestore;
 
   Future<void> init() async {
     await _requestPermissions();
     await _initRemoteNotifications();
     await _initLocalNotifications();
+    _firebaseAuth.authStateChanges().listen((_) => _saveCurrentToken());
   }
 
   Future<void> _requestPermissions() async {
@@ -41,12 +50,27 @@ class NotificationsService {
 
   Future<void> _initRemoteNotifications() async {
     final token = await _firebaseMessaging.getToken();
+    await _saveToken(token);
     _firebaseMessaging.onTokenRefresh.listen((newToken) {
+      _saveToken(newToken);
       print('FCM Token refreshed: $newToken');
     });
     print('FCM Token: $token');
 
     FirebaseMessaging.onMessage.listen(_foregroundMessageHandler);
+  }
+
+  Future<void> _saveCurrentToken() async {
+    await _saveToken(await _firebaseMessaging.getToken());
+  }
+
+  Future<void> _saveToken(String? token) async {
+    final uid = _firebaseAuth.currentUser?.uid;
+    if (uid == null || token == null || token.isEmpty) return;
+
+    await _firestore.collection('users').doc(uid).set({
+      'deviceToken': token,
+    }, SetOptions(merge: true));
   }
 
   Future<void> showTransferSentNotification() async {
@@ -77,12 +101,14 @@ class NotificationsService {
 
     await _localNotifications
         .resolvePlatformSpecificImplementation<
-            AndroidFlutterLocalNotificationsPlugin>()
+          AndroidFlutterLocalNotificationsPlugin
+        >()
         ?.createNotificationChannel(canal);
 
     await _localNotifications
         .resolvePlatformSpecificImplementation<
-            AndroidFlutterLocalNotificationsPlugin>()
+          AndroidFlutterLocalNotificationsPlugin
+        >()
         ?.requestNotificationsPermission();
 
     await _localNotifications.initialize(
@@ -95,10 +121,7 @@ class NotificationsService {
     );
   }
 
-  Future<void> _showLocalNotification({
-    String? title,
-    String? body,
-  }) async {
+  Future<void> _showLocalNotification({String? title, String? body}) async {
     const androidDetails = AndroidNotificationDetails(
       'canal_alta_prioridad',
       'Avisos importantes',

@@ -1,7 +1,8 @@
 import 'package:experience_app/core/navigation/admin_app_shell.dart';
+import 'package:experience_app/features/admin/sales/presentation/views/sales_view.dart';
 import 'package:experience_app/core/navigation/app_shell.dart';
 import 'package:experience_app/features/admin/products/presentation/views/products_view.dart';
-import 'package:experience_app/features/admin/tasks/presentation/views/tasks_view.dart';
+import 'package:experience_app/features/admin/sales/presentation/views/sales_view.dart';
 import 'package:experience_app/features/cart/presentation/views/cart_view.dart';
 import 'package:experience_app/features/checkout/presentation/views/checkout_view.dart';
 import 'package:experience_app/features/explore/domain/entities/product_entity.dart';
@@ -100,9 +101,9 @@ final router = GoRouter(
         StatefulShellBranch(
           routes: [
             GoRoute(
-              name: Routes.adminTasks,
-              path: '/admin_tasks',
-              builder: (context, state) => const TasksView(),
+              name: Routes.adminSales,
+              path: '/admin_sales',
+              builder: (context, state) => const SalesView(),
             ),
           ],
         ),
@@ -131,6 +132,6 @@ abstract class Routes {
   static const String productDetail = 'product_detail';
   static const String cart = 'cart';
   static const String checkout = 'checkout';
-  static const String adminTasks = 'admin_tasks';
   static const String adminProducts = 'admin_products';
+  static const String adminSales = 'admin_sales';
 }

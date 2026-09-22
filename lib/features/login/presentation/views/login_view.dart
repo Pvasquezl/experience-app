@@ -73,8 +73,8 @@ class _LoginView extends ConsumerWidget {
                     final state = ref.read(loginNotifierProvider);
                     if (state is LoginSuccessState && context.mounted) {
                       print('Login successful: ${state.role}');
-                      if(state.role == Role.admin) {
-                        context.goNamed(Routes.adminTasks);
+                      if (state.role == Role.admin) {
+                        context.goNamed(Routes.adminSales);
                       } else {
                         context.goNamed(Routes.explore);
                       }
