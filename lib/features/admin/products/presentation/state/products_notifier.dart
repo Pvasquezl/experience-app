@@ -3,7 +3,6 @@ import 'package:experience_app/features/admin/products/domain/use_cases/create_p
 import 'package:experience_app/features/admin/products/domain/use_cases/delete_product.dart';
 import 'package:experience_app/features/admin/products/domain/use_cases/get_products.dart';
 import 'package:experience_app/features/admin/products/domain/use_cases/update_product.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod/legacy.dart';
 
 class ProductsState {
@@ -11,11 +10,7 @@ class ProductsState {
   final bool isLoading;
   final String? error;
 
-  ProductsState({
-    required this.products,
-    this.isLoading = false,
-    this.error,
-  });
+  ProductsState({required this.products, this.isLoading = false, this.error});
 
   ProductsState copyWith({
     List<ProductAdminEntity>? products,
@@ -41,11 +36,11 @@ class ProductsNotifier extends StateNotifier<ProductsState> {
     CreateProductUseCase? createProduct,
     UpdateProductUseCase? updateProduct,
     DeleteProductUseCase? deleteProduct,
-  })  : _getProducts = getProducts ?? GetProductsUseCase(),
-        _createProduct = createProduct ?? CreateProductUseCase(),
-        _updateProduct = updateProduct ?? UpdateProductUseCase(),
-        _deleteProduct = deleteProduct ?? DeleteProductUseCase(),
-        super(ProductsState(products: [])) {
+  }) : _getProducts = getProducts ?? GetProductsUseCase(),
+       _createProduct = createProduct ?? CreateProductUseCase(),
+       _updateProduct = updateProduct ?? UpdateProductUseCase(),
+       _deleteProduct = deleteProduct ?? DeleteProductUseCase(),
+       super(ProductsState(products: [])) {
     loadProducts();
   }
 
@@ -71,8 +66,9 @@ class ProductsNotifier extends StateNotifier<ProductsState> {
   Future<void> updateProduct(ProductAdminEntity updated) async {
     try {
       final saved = await _updateProduct(updated);
-      final updatedList =
-          state.products.map((p) => p.id == saved.id ? saved : p).toList();
+      final updatedList = state.products
+          .map((p) => p.id == saved.id ? saved : p)
+          .toList();
       state = state.copyWith(products: updatedList);
     } catch (e) {
       state = state.copyWith(error: e.toString());
@@ -93,5 +89,5 @@ class ProductsNotifier extends StateNotifier<ProductsState> {
 
 final productsNotifierProvider =
     StateNotifierProvider<ProductsNotifier, ProductsState>(
-  (ref) => ProductsNotifier(),
-);
+      (ref) => ProductsNotifier(),
+    );

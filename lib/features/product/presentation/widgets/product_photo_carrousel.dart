@@ -1,5 +1,5 @@
 import 'package:experience_app/features/explore/domain/entities/product_entity.dart';
-import 'package:experience_app/features/product/presentation/state/product_detail_notifier.dart';
+import 'package:experience_app/features/product/presentation/state/product_detail_notifier.dart.txt';
 import 'package:experience_app/features/product/presentation/state/product_detail_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

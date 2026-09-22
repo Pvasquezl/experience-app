@@ -3,19 +3,22 @@ import 'package:experience_app/features/product/domain/use_cases/get_product_det
 import 'package:experience_app/features/product/presentation/state/product_detail_state.dart';
 import 'package:riverpod/legacy.dart';
 
-
-final productDetailNotifierProvider = StateNotifierProviderFamily<ProductDetailNotifier, ProductDetailState, ProductEntity>(
-  (ref, product) => ProductDetailNotifier(product: product),
-);
-
+final productDetailNotifierProvider =
+    StateNotifierProviderFamily<
+      ProductDetailNotifier,
+      ProductDetailState,
+      ProductEntity
+    >((ref, product) => ProductDetailNotifier(product: product));
 
 class ProductDetailNotifier extends StateNotifier<ProductDetailState> {
   final ProductEntity product;
   final GetProductDetail _getProductDetailUseCase;
-  
-  ProductDetailNotifier({required this.product, GetProductDetail? getProductDetailUseCase})
-      : _getProductDetailUseCase = getProductDetailUseCase ?? GetProductDetail(),
-        super(ProductDetailInitial(product)) {
+
+  ProductDetailNotifier({
+    required this.product,
+    GetProductDetail? getProductDetailUseCase,
+  }) : _getProductDetailUseCase = getProductDetailUseCase ?? GetProductDetail(),
+       super(ProductDetailInitial(product)) {
     loadProductDetail();
   }
 

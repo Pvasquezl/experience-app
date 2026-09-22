@@ -1,6 +1,6 @@
 import 'package:experience_app/core/navigation/router.dart';
 import 'package:experience_app/features/explore/domain/entities/product_entity.dart';
-import 'package:experience_app/features/product/presentation/state/product_detail_notifier.dart';
+import 'package:experience_app/features/product/presentation/state/product_detail_notifier.dart.txt';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -22,7 +22,9 @@ class ProductDetailView extends ConsumerWidget {
       },
       child: Scaffold(
         appBar: AppBar(title: Text('Product Detail - ID: ${producto.id}')),
-        body: Center(child: Text('Details for product with ID: ${producto.id}')),
+        body: Center(
+          child: Text('Details for product with ID: ${producto.id}'),
+        ),
       ),
     );
   }
