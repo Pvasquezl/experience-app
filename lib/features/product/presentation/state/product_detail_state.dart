@@ -4,11 +4,13 @@ import 'package:experience_app/features/product/domain/entities/product_detail_e
 abstract class ProductDetailState {
   final ProductEntity product;
   final ProductDetailEntity? productDetail;
-  late final int currentPage;
+  final int currentPage;
+  final int selectedQuantity;
   ProductDetailState({
     required this.product,
     required this.productDetail,
     this.currentPage = 0,
+    this.selectedQuantity = 1,
   });
 }
 
@@ -22,5 +24,6 @@ class ProductDetailLoaded extends ProductDetailState {
     required super.product,
     required super.productDetail,
     super.currentPage = 0,
+    super.selectedQuantity = 1,
   });
 }

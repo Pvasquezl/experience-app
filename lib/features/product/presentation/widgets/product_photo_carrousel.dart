@@ -1,5 +1,5 @@
 import 'package:experience_app/features/explore/domain/entities/product_entity.dart';
-import 'package:experience_app/features/product/presentation/state/product_detail_notifier.dart.txt';
+import 'package:experience_app/features/product/presentation/state/product_detail_notifier.dart';
 import 'package:experience_app/features/product/presentation/state/product_detail_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -11,10 +11,10 @@ class ProductPhotoCarrousel extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(productDetailNotifierProvider(product));
-    final preferredItems = state is ProductDetailLoaded
+    final images = state is ProductDetailLoaded
         ? state.productDetail?.image ?? []
-        : [];
-    final itemCount = preferredItems.isNotEmpty ? preferredItems.length : 0;
+        : <String>[];
+    final itemCount = images.isNotEmpty ? images.length : 0;
     return SizedBox(
       height: 300,
       child: Stack(
@@ -31,10 +31,7 @@ class ProductPhotoCarrousel extends ConsumerWidget {
               return Container(
                 width: double.infinity,
                 decoration: BoxDecoration(color: Colors.white),
-                child: Image.network(
-                  preferredItems[index].imageUrl,
-                  fit: BoxFit.fitHeight,
-                ),
+                child: Image.network(images[index], fit: BoxFit.fitHeight),
               );
             },
           ),
