@@ -5,6 +5,7 @@ class ProductModel {
   final bool available;
   final int quantity;
   final String image;
+  final bool favorite;
 
   const ProductModel({
     required this.id,
@@ -13,6 +14,7 @@ class ProductModel {
     required this.available,
     required this.quantity,
     required this.image,
+    this.favorite = false,
   });
 
   factory ProductModel.fromJson(String id, Map<String, dynamic> json) {
@@ -23,6 +25,7 @@ class ProductModel {
       available: json['available'] as bool,
       quantity: (json['quantity'] as num).toInt(),
       image: json['image'] as String? ?? '',
+      favorite: json['favorite'] as bool? ?? false,
     );
   }
 
@@ -33,6 +36,7 @@ class ProductModel {
       'available': available,
       'quantity': quantity,
       'image': image,
+      'favorite': favorite,
     };
   }
 }

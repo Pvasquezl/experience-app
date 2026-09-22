@@ -21,6 +21,7 @@ class _ProductFormViewState extends ConsumerState<ProductFormView> {
   late final TextEditingController _quantityController;
   late final TextEditingController _imageController;
   late bool _available;
+  late bool _favorite;
 
   bool get _isEditing => widget.product != null;
 
@@ -38,6 +39,7 @@ class _ProductFormViewState extends ConsumerState<ProductFormView> {
     );
     _imageController = TextEditingController(text: widget.product?.image ?? '');
     _available = widget.product?.available ?? true;
+    _favorite = widget.product?.favorite ?? false;
   }
 
   @override
@@ -62,6 +64,7 @@ class _ProductFormViewState extends ConsumerState<ProductFormView> {
           available: _available,
           quantity: int.parse(_quantityController.text.trim()),
           image: _imageController.text.trim(),
+          favorite: _favorite,
         ),
       );
     } else {
@@ -74,6 +77,7 @@ class _ProductFormViewState extends ConsumerState<ProductFormView> {
           available: _available,
           quantity: int.parse(_quantityController.text.trim()),
           image: _imageController.text.trim(),
+          favorite: _favorite,
         ),
       );
     }
@@ -151,21 +155,28 @@ class _ProductFormViewState extends ConsumerState<ProductFormView> {
                 },
               ),
               const SizedBox(height: 16),
-              IconButton(
-                icon: const Icon(Icons.image_outlined),
-                iconSize: 40.0,
-                color: Colors.blue,
-                tooltip: 'Seleccionar imagen',
-                onPressed: () {
-                  // Lógica para seleccionar la imagen
-                  //seleccionarImagen();
-                },
+              TextFormField(
+                controller: _imageController,
+                keyboardType: TextInputType.url,
+                decoration: const InputDecoration(
+                  labelText: 'Image URL',
+                  border: OutlineInputBorder(),
+                ),
+                validator: (v) => (v == null || v.trim().isEmpty)
+                    ? 'Image URL is required'
+                    : null,
               ),
               const SizedBox(height: 8),
               SwitchListTile(
                 title: const Text('Available'),
                 value: _available,
                 onChanged: (v) => setState(() => _available = v),
+                contentPadding: EdgeInsets.zero,
+              ),
+              SwitchListTile(
+                title: const Text('Featured (favorite)'),
+                value: _favorite,
+                onChanged: (v) => setState(() => _favorite = v),
                 contentPadding: EdgeInsets.zero,
               ),
               const SizedBox(height: 24),

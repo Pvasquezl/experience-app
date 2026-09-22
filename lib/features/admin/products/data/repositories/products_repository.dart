@@ -7,7 +7,7 @@ class ProductsRepositoryImpl implements ProductsRepository {
   final ProductsDataSource _dataSource;
 
   ProductsRepositoryImpl({ProductsDataSource? dataSource})
-      : _dataSource = dataSource ?? ProductsDataSource();
+    : _dataSource = dataSource ?? ProductsDataSource();
 
   @override
   Future<List<ProductAdminEntity>> getProducts() async {
@@ -40,6 +40,7 @@ class ProductsRepositoryImpl implements ProductsRepository {
       available: model.available,
       quantity: model.quantity,
       image: model.image,
+      favorite: model.favorite,
     );
   }
 
@@ -51,6 +52,7 @@ class ProductsRepositoryImpl implements ProductsRepository {
       available: entity.available,
       quantity: entity.quantity,
       image: entity.image,
+      favorite: entity.favorite,
     );
   }
 }

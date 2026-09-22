@@ -5,6 +5,7 @@ class ProductAdminEntity {
   final bool available;
   final int quantity;
   final String image;
+  final bool favorite;
 
   ProductAdminEntity({
     required this.id,
@@ -13,6 +14,7 @@ class ProductAdminEntity {
     required this.available,
     required this.quantity,
     required this.image,
+    this.favorite = false,
   });
 
   ProductAdminEntity copyWith({
@@ -22,6 +24,7 @@ class ProductAdminEntity {
     bool? available,
     int? quantity,
     String? image,
+    bool? favorite,
   }) {
     return ProductAdminEntity(
       id: id ?? this.id,
@@ -30,6 +33,7 @@ class ProductAdminEntity {
       available: available ?? this.available,
       quantity: quantity ?? this.quantity,
       image: image ?? this.image,
+      favorite: favorite ?? this.favorite,
     );
   }
 }
