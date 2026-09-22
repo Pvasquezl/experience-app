@@ -1,6 +1,7 @@
 import 'package:experience_app/features/explore/domain/entities/preferred_products_entity.dart';
+
 class PreferredProductsModel {
-  final int id;
+  final String id;
   final String name;
   final String imageUrl;
 
@@ -23,6 +24,17 @@ class PreferredProductsModel {
       id: json['id'],
       name: json['name'],
       imageUrl: json['imageUrl'],
+    );
+  }
+
+  factory PreferredProductsModel.fromFirestore(
+    String id,
+    Map<String, dynamic> json,
+  ) {
+    return PreferredProductsModel(
+      id: id,
+      name: json['name'] as String,
+      imageUrl: json['image'] as String? ?? '',
     );
   }
 }

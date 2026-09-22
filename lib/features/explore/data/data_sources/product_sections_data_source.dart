@@ -1,67 +1,22 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:experience_app/features/explore/data/models/product_model.dart';
 import 'package:experience_app/features/explore/data/models/product_section_model.dart';
 
 class ProductSectionsDataSource {
+  final FirebaseFirestore _firestore;
+
+  ProductSectionsDataSource({FirebaseFirestore? firestore})
+    : _firestore = firestore ?? FirebaseFirestore.instance;
+
   Future<List<ProductSectionModel>> getPreferredProducts() async {
-    await Future.delayed(Duration(seconds: 10));
-    const mockData = [
-      {
-        'title': 'Perfect for you today',
-        'products': [
-          {
-            'id': '1A',
-            'name': 'Amazing T-shirt',
-            'price': 12.00,
-            'image':
-                'https://emprendepyme.net/wp-content/uploads/2023/03/cualidades-producto.jpg',
-          },
-          {
-            'id': '2',
-            'name': 'Fabulous Pants',
-            'price': 15.00,
-            'image':
-                'https://emprendepyme.net/wp-content/uploads/2023/03/cualidades-producto.jpg',
-          },
-          {
-            'id': '3',
-            'name': 'Cool Shoes',
-            'price': 30.00,
-            'image':
-                'https://emprendepyme.net/wp-content/uploads/2023/03/cualidades-producto.jpg',
-          },
-          {
-            'id': '4',
-            'name': 'Modern Jacket',
-            'price': 45.00,
-            'image':
-                'https://emprendepyme.net/wp-content/uploads/2023/03/cualidades-producto.jpg',
-          },
-        ],
-      },
-      {
-        'title': 'For this summer',
-        'products': [
-          {
-            'id': '5',
-            'name': 'Summer Hat',
-            'price': 10.00,
-            'image':
-                'https://emprendepyme.net/wp-content/uploads/2023/03/cualidades-producto.jpg',
-          },
-        ],
-      },
-      {
-        'title': 'For this Sunday',
-        'products': [
-          {
-            'id': '6',
-            'name': 'Sunday Dress',
-            'price': 20.00,
-            'image':
-                'https://emprendepyme.net/wp-content/uploads/2023/03/cualidades-producto.jpg',
-          },
-        ],
-      },
+    final snapshot = await _firestore.collection('products').get();
+    final products = snapshot.docs
+        .map((doc) => ProductModel.fromFirestore(doc.id, doc.data()))
+        .where((product) => product.available)
+        .toList();
+
+    return [
+      ProductSectionModel(title: 'Nuestros productos', products: products),
     ];
-    return mockData.map((json) => ProductSectionModel.fromJson(json)).toList();
   }
 }

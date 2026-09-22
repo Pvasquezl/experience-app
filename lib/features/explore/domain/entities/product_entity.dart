@@ -5,12 +5,16 @@ class ProductEntity {
   final String name;
   final String image;
   final double price;
+  final bool available;
+  final int quantity;
 
   ProductEntity({
     required this.id,
     required this.name,
     required this.image,
     required this.price,
+    this.available = true,
+    this.quantity = 0,
   });
 
   factory ProductEntity.fromModel(ProductModel model) {
@@ -19,6 +23,8 @@ class ProductEntity {
       name: model.name,
       image: model.image,
       price: model.price,
+      available: model.available,
+      quantity: model.quantity,
     );
   }
 }

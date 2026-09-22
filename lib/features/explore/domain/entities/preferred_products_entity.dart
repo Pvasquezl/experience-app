@@ -1,7 +1,7 @@
 import 'package:experience_app/features/explore/data/models/preferred_products_model.dart';
 
 class PreferredProductsEntity {
-  final int id;
+  final String id;
   final String name;
   final String imageUrl;
 
