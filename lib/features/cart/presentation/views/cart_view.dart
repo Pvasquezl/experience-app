@@ -37,7 +37,7 @@ class CartView extends ConsumerWidget {
     return ListView.separated(
       padding: const EdgeInsets.fromLTRB(16, 16, 16, 24),
       itemCount: state.items.length,
-      separatorBuilder: (_, __) => const Divider(height: 24),
+      separatorBuilder: (_, _) => const Divider(height: 24),
       itemBuilder: (context, index) {
         final item = state.items[index];
 
@@ -54,7 +54,7 @@ class CartView extends ConsumerWidget {
                   child: Image.network(
                     item.image,
                     fit: BoxFit.cover,
-                    errorBuilder: (_, __, ___) {
+                    errorBuilder: (_, _, _) {
                       return const Icon(Icons.broken_image_outlined);
                     },
                   ),

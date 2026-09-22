@@ -20,9 +20,10 @@ class LoginDataSource {
         if (response.user?.uid != null) {
           return getUserInfo(response.user!.uid);
         }
+        throw Exception('No se pudo iniciar sesión');
       }
-      _auth.signOut();
-      throw Exception('El usuario ya está logueado');
+
+      return getUserInfo(_auth.currentUser!.uid);
     } on FirebaseAuthException catch (e) {
       print('Error en login: $e');
       throw Exception('Error en login: ${e.message}');
@@ -34,16 +35,19 @@ class LoginDataSource {
         .collection('users')
         .doc(uid)
         .get();
-  
-  if(usersCollection.exists) {
-    print('User document data: ${usersCollection.data()}');
-    final userData = UserModel.fromJson(usersCollection.data() as Map<String, dynamic>);
-    print('User data: ${userData.name}, ${userData.email}, ${userData.role}');
-    return userData;
-  } else {
-    print('No se encontró el usuario con UID: $uid');
-    throw Exception('No se encontró el usuario con UID: $uid');
-  }}
+
+    if (usersCollection.exists) {
+      print('User document data: ${usersCollection.data()}');
+      final userData = UserModel.fromJson(
+        usersCollection.data() as Map<String, dynamic>,
+      );
+      print('User data: ${userData.name}, ${userData.email}, ${userData.role}');
+      return userData;
+    } else {
+      print('No se encontró el usuario con UID: $uid');
+      throw Exception('No se encontró el usuario con UID: $uid');
+    }
+  }
 
   Future<void> logout() async {
     await _auth.signOut();
