@@ -6,14 +6,19 @@ import 'package:experience_app/features/login/domain/repositories/login_reposito
 class LoginRepositoryImpl implements LoginRepository {
   final LoginDataSource _dataSource;
   LoginRepositoryImpl({LoginDataSource? dataSource})
-      : _dataSource = dataSource ?? LoginDataSource();
-
+    : _dataSource = dataSource ?? LoginDataSource();
 
   @override
   Future<UserEntity> login(String email, String password) async {
-    final userLogin = await _dataSource.login(LoginRequestModel(email: email, password: password));
+    final userLogin = await _dataSource.login(
+      LoginRequestModel(email: email, password: password),
+    );
     final response = UserEntity.fromModel(userLogin);
     return response;
   }
 
+  @override
+  Future<void> logout() async {
+    await _dataSource.logout();
+  }
 }

@@ -5,6 +5,7 @@ import 'package:experience_app/features/explore/presentation/widgets/header_expl
 import 'package:experience_app/features/explore/presentation/widgets/photo_carrousel.dart';
 import 'package:experience_app/features/explore/presentation/widgets/product_carrousel.dart';
 import 'package:experience_app/features/explore/presentation/widgets/see_more_space.dart';
+import 'package:experience_app/features/login/domain/use_cases/logout.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -35,6 +36,21 @@ class ExploreBody extends ConsumerWidget {
             child: Column(
               children: [
                 const HeaderExplore(),
+                Padding(
+                  padding: const EdgeInsets.only(right: 20.0),
+                  child: Align(
+                    alignment: Alignment.centerRight,
+                    child: TextButton.icon(
+                      onPressed: () async {
+                        await LogoutUseCase().call();
+                        if (!context.mounted) return;
+                        context.goNamed(Routes.login);
+                      },
+                      icon: const Icon(Icons.logout, size: 18),
+                      label: const Text('Cerrar sesión'),
+                    ),
+                  ),
+                ),
                 const PhotoCarrousel(),
                 const SizedBox(height: 12.0),
                 Padding(
