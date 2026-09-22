@@ -13,81 +13,134 @@ class CartView extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(title: const Text('Carrito')),
-      body: state.isLoading
-          ? const Center(child: CircularProgressIndicator())
-          : state.items.isEmpty
-          ? const Center(child: Text('Tu carrito está vacío'))
-          : ListView.separated(
-              padding: const EdgeInsets.all(16.0),
-              itemCount: state.items.length,
-              separatorBuilder: (context, index) => const Divider(height: 24),
-              itemBuilder: (context, index) {
-                final item = state.items[index];
-                return Row(
-                  children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(8.0),
-                      child: Image.network(
-                        item.image,
-                        width: 64,
-                        height: 64,
-                        fit: BoxFit.cover,
-                        errorBuilder: (context, error, stackTrace) =>
-                            const Icon(Icons.broken_image, size: 64),
-                      ),
-                    ),
-                    const SizedBox(width: 12.0),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            item.name,
-                            style: const TextStyle(fontWeight: FontWeight.w600),
-                          ),
-                          const SizedBox(height: 4.0),
-                          Text('Cantidad: ${item.quantity}'),
-                        ],
-                      ),
-                    ),
-                    Text(
-                      'Q ${item.subtotal.toStringAsFixed(2)}',
-                      style: const TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                  ],
-                );
-              },
-            ),
+      body: _buildBody(context, state),
       bottomNavigationBar: state.items.isEmpty
           ? null
-          : SafeArea(
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Row(
+          : _CartSummary(
+              total: state.total,
+              onCheckout: () {
+                context.pushNamed(Routes.checkout);
+              },
+            ),
+    );
+  }
+
+  Widget _buildBody(BuildContext context, dynamic state) {
+    if (state.isLoading) {
+      return const Center(child: CircularProgressIndicator());
+    }
+
+    if (state.items.isEmpty) {
+      return const Center(child: Text('Tu carrito está vacío'));
+    }
+
+    return ListView.separated(
+      padding: const EdgeInsets.fromLTRB(16, 16, 16, 24),
+      itemCount: state.items.length,
+      separatorBuilder: (_, __) => const Divider(height: 24),
+      itemBuilder: (context, index) {
+        final item = state.items[index];
+
+        return SizedBox(
+          height: 64,
+          child: Row(
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(8),
+                child: Container(
+                  width: 64,
+                  height: 64,
+                  color: Colors.grey.shade200,
+                  child: Image.network(
+                    item.image,
+                    fit: BoxFit.cover,
+                    errorBuilder: (_, __, ___) {
+                      return const Icon(Icons.broken_image_outlined);
+                    },
+                  ),
+                ),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Text('Total'),
-                          Text(
-                            'Q ${state.total.toStringAsFixed(2)}',
-                            style: const TextStyle(
-                              fontSize: 18.0,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ],
-                      ),
+                    Text(
+                      item.name,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(fontWeight: FontWeight.w600),
                     ),
-                    FilledButton(
-                      onPressed: () => context.goNamed(Routes.checkout),
-                      child: const Text('Confirmar pedido'),
+                    const SizedBox(height: 4),
+                    Text('Cantidad: ${item.quantity}'),
+                  ],
+                ),
+              ),
+              const SizedBox(width: 8),
+              Text(
+                'Q ${item.subtotal.toStringAsFixed(2)}',
+                style: const TextStyle(fontWeight: FontWeight.bold),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+}
+
+class _CartSummary extends StatelessWidget {
+  const _CartSummary({required this.total, required this.onCheckout});
+
+  final double total;
+  final VoidCallback onCheckout;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        color: Theme.of(context).scaffoldBackgroundColor,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.08),
+            blurRadius: 8,
+            offset: const Offset(0, -2),
+          ),
+        ],
+      ),
+      child: SafeArea(
+        top: false,
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Row(
+            children: [
+              Expanded(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text('Total'),
+                    const SizedBox(height: 2),
+                    Text(
+                      'Q ${total.toStringAsFixed(2)}',
+                      style: const TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ],
                 ),
               ),
-            ),
+              const SizedBox(width: 16),
+              FilledButton(
+                onPressed: onCheckout,
+                child: const Text('Confirmar pedido'),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

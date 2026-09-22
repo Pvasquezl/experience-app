@@ -13,7 +13,7 @@ class ShoppingBagBadge extends ConsumerWidget {
     final state = ref.watch(shoppingCartNotifierProvider);
     final cartItems = state is ShoppingCartLoadedState ? state.cartItems : 0;
     return GestureDetector(
-      onTap: () => context.goNamed(Routes.cart),
+      onTap: () => context.pushNamed(Routes.cart),
       child: Stack(
         clipBehavior: Clip.none,
         children: [
