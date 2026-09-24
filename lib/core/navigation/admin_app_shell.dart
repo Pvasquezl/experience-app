@@ -58,10 +58,6 @@ class AdminAppShell extends StatelessWidget {
               icon: Icon(Icons.add_box_outlined),
               label: 'Productos',
             ),
-            NavigationDestination(
-              icon: Icon(Icons.delete_outline),
-              label: 'Eliminar',
-            ),
           ],
         ),
       ),

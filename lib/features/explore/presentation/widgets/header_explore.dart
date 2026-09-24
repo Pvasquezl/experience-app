@@ -18,17 +18,7 @@ class _HeaderExplore extends StatelessWidget {
     return const Padding(
       padding: EdgeInsets.only(bottom: 16.0, left: 25.0, right: 25.0),
       child: Row(
-        children: [
-          Icon(Icons.search, size: 35.0),
-
-          Spacer(),
-
-          Icon(Icons.favorite_border, size: 32, color: Colors.black87),
-
-          SizedBox(width: 12.0),
-
-          ShoppingBagBadge(),
-        ],
+        children: [Spacer(), SizedBox(width: 12.0), ShoppingBagBadge()],
       ),
     );
   }

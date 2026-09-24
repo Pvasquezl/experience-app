@@ -24,7 +24,10 @@ class SalesDataSource {
       'userId': _auth.currentUser?.uid,
       'address': address,
       'paymentMethod': paymentMethod.name,
-      'total': total,
+
+      // Redondea a 2 decimales y lo guarda como número.
+      'total': double.parse(total.toStringAsFixed(2)),
+
       'items': items
           .map(
             (item) => {
@@ -37,11 +40,13 @@ class SalesDataSource {
             },
           )
           .toList(),
+
       'createdAt': FieldValue.serverTimestamp(),
     });
 
     for (final item in items) {
       final productRef = _firestore.collection('products').doc(item.id);
+
       batch.update(productRef, {
         'quantity': FieldValue.increment(-item.quantity),
       });

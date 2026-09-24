@@ -174,13 +174,14 @@ class NotificationsService {
 
   void _handleNotificationNavigation(RemoteMessage message) {
     final data = message.data;
+    final saleId = data['sale_id'] ?? data['saleId'] ?? '';
 
     switch (data['feature']) {
       case 'sale_details':
-        router.goNamed(Routes.cart, extra: data);
+        router.goNamed(Routes.saleDetails, extra: {'saleId': saleId});
         break;
       default:
-        router.goNamed(Routes.saleDetails);
+        router.goNamed(Routes.explore);
     }
   }
 

@@ -1,5 +1,4 @@
 import 'package:experience_app/core/navigation/admin_app_shell.dart';
-import 'package:experience_app/features/admin/sales/presentation/views/sales_view.dart';
 import 'package:experience_app/core/navigation/app_shell.dart';
 import 'package:experience_app/features/admin/products/presentation/views/products_view.dart';
 import 'package:experience_app/features/admin/sales/presentation/views/sales_view.dart';
@@ -11,6 +10,7 @@ import 'package:experience_app/features/login/presentation/views/login_view.dart
 import 'package:experience_app/features/onboarding/presentation/views/experience_personalitation_view.dart';
 import 'package:experience_app/features/onboarding/presentation/views/onboarding_view.dart';
 import 'package:experience_app/features/product/presentation/views/product_detail_view.dart';
+import 'package:experience_app/features/sales/presentation/views/sale_detail_view.dart';
 import 'package:go_router/go_router.dart';
 
 final router = GoRouter(
@@ -49,6 +49,15 @@ final router = GoRouter(
       name: Routes.checkout,
       path: '/checkout',
       builder: (context, state) => const CheckoutView(),
+    ),
+    GoRoute(
+      name: Routes.saleDetails,
+      path: '/sale_details',
+      builder: (context, state) {
+        final extra = state.extra is Map ? state.extra as Map : const {};
+        final saleId = (extra['saleId'] ?? extra['sale_id'])?.toString() ?? '';
+        return SaleDetailView(saleId: saleId);
+      },
     ),
     StatefulShellRoute.indexedStack(
       builder: (context, state, navigationShell) {

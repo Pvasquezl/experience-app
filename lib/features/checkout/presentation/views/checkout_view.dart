@@ -76,6 +76,50 @@ class CheckoutView extends ConsumerWidget {
               onChanged: (value) => notifier.setPaymentMethod(value!),
               contentPadding: EdgeInsets.zero,
             ),
+            if (state.paymentMethod == PaymentMethod.card) ...[
+              const SizedBox(height: 12),
+              TextFormField(
+                initialValue: state.cardNumber,
+                keyboardType: TextInputType.number,
+                onChanged: (value) {
+                  final formatted = value.replaceAll(RegExp(r'\D'), '');
+                  final spaced = formatted
+                      .replaceAllMapped(
+                        RegExp(r'.{1,4}'),
+                        (match) => '${match.group(0)} ',
+                      )
+                      .trim();
+                  notifier.setCardNumber(spaced);
+                },
+                maxLength: 19,
+                decoration: const InputDecoration(
+                  hintText: '4242 4242 4242 4242',
+                  labelText: 'Número de tarjeta',
+                  border: OutlineInputBorder(),
+                  counterText: '',
+                ),
+              ),
+              const SizedBox(height: 8),
+              const Text(
+                'Tarjetas de prueba: 4242 4242 4242 4242, 5555 5555 5555 4444, 4111 1111 1111 1111',
+                style: TextStyle(fontSize: 12, color: Color(0xFF64748B)),
+              ),
+            ],
+            if (state.paymentError != null) ...[
+              const SizedBox(height: 12),
+              Container(
+                width: double.infinity,
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: const Color(0xFFFFF1F2),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Text(
+                  state.paymentError!,
+                  style: const TextStyle(color: Color(0xFFB91C1C)),
+                ),
+              ),
+            ],
             const Spacer(),
             SizedBox(
               width: double.infinity,

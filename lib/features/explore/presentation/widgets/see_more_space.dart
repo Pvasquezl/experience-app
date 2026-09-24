@@ -17,15 +17,6 @@ class SeeMoreSpace extends StatelessWidget {
           _title,
           style: const TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
         ),
-        TextButton(
-          onPressed: () {
-            context.goNamed(_route);
-          },
-          child: const Text(
-            "See more",
-            style: TextStyle(color: Color(0xFF006FFD)),
-          ),
-        ),
       ],
     );
   }
