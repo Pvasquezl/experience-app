@@ -59,7 +59,7 @@ try:
     message_id = messaging.send_each_for_multicast(
         messaging.MulticastMessage(
             notification=messaging.Notification(
-                title="Venta confirmada ✅",
+                title="Venta confirmada",
                 body=f"Tu compra por {venta.get('total', 0)} ya está procesada",
             ),
             data={

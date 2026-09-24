@@ -132,6 +132,7 @@ abstract class Routes {
   static const String productDetail = 'product_detail';
   static const String cart = 'cart';
   static const String checkout = 'checkout';
+  static const String saleDetails = 'sale_details';
   static const String adminProducts = 'admin_products';
   static const String adminSales = 'admin_sales';
 }
