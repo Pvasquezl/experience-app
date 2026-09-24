@@ -16,3 +16,9 @@ class ProductSectionLoadedState extends ProductSectionState {
 class LoadingProductSectionState extends ProductSectionState {
   LoadingProductSectionState() : super(productSections: []);
 }
+
+class ErrorProductSectionState extends ProductSectionState {
+  final String message;
+  ErrorProductSectionState({required this.message})
+    : super(productSections: []);
+}

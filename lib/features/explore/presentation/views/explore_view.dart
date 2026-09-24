@@ -74,6 +74,15 @@ class ExploreBody extends ConsumerWidget {
                           is LoadingProductSectionState) ...[
                         const SizedBox(height: 40.0),
                         const Center(child: CircularProgressIndicator()),
+                      ] else if (productSectionsState
+                          is ErrorProductSectionState) ...[
+                        const SizedBox(height: 40.0),
+                        Center(
+                          child: Text(
+                            'No se pudieron cargar las secciones: '
+                            '${productSectionsState.message}',
+                          ),
+                        ),
                       ] else ...[
                         const Center(
                           child: Text('No se pudieron cargar las secciones'),

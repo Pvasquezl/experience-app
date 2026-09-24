@@ -12,7 +12,6 @@ class ProductSectionsDataSource {
     final snapshot = await _firestore.collection('products').get();
     final products = snapshot.docs
         .map((doc) => ProductModel.fromFirestore(doc.id, doc.data()))
-        .where((product) => product.available)
         .toList();
 
     return [

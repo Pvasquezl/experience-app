@@ -24,6 +24,7 @@ class ProductSectionsNotifier extends StateNotifier<ProductSectionState> {
       state = ProductSectionLoadedState(productSections: sections);
     } catch (e) {
       print('Error loading product sections: $e');
+      state = ErrorProductSectionState(message: e.toString());
     }
   }
 }
